@@ -7,7 +7,7 @@ const client = contentful.createClient({
 });
 
 
-module.exports = function createOrder(orderDescription, orderDateTime, priceTotal, orderId) {
+module.exports = function createOrder(orderDescription, priceTotal, orderId) {
 
     return client.getSpace(space)
         .then(space => space.getEnvironment('master'))
@@ -17,7 +17,7 @@ module.exports = function createOrder(orderDescription, orderDateTime, priceTota
                     'en-US': orderDescription
                 },
                 orderDateTime: {
-                    'en-US': orderDateTime
+                    'en-US': new Date()
                 },
                 priceTotal: {
                     'en-US': priceTotal
