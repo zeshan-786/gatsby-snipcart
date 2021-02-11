@@ -53,7 +53,7 @@ class Layout extends React.Component {
           console.log("Order Completed:")
           console.log(order)
         } catch (error) {
-          console.log("Error: ", errr.message);
+          console.log("Error: ", error.message);
         }
       })
     }
