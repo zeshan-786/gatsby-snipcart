@@ -7,8 +7,8 @@ const client = contentful.createClient({
 });
 
 module.exports = function getOrders() {
-    return client.getEntries({
-        order: 'sys.createdAt',        
-        content_type: 'Order'
-    })
+    return client.getSpace(space)
+    .then(space => space.getEnvironment('master'))
+    .then(environment => environment.getEntries('order'))
+    .then(entries => entries);
 }
