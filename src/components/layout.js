@@ -1,17 +1,15 @@
-import React from "react";
-import styled, { ThemeProvider } from 'styled-components';
-import { theme } from '../styles/theme';
-import { GlobalStyle } from '../styles/globalStyle';
+import React from "react"
+import styled, { ThemeProvider } from "styled-components"
+import { theme } from "../styles/theme"
+import { GlobalStyle } from "../styles/globalStyle"
 
-import HeaderMain from './Headers/HeaderMain';
-import HeaderMinor from './Headers/HeaderMinor';
-
+import HeaderMain from "./Headers/HeaderMain"
+import HeaderMinor from "./Headers/HeaderMinor"
 
 const PageWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   width: 90%;
-
 `
 
 const MainSection = styled.main`
@@ -32,15 +30,34 @@ const ExternalLink = styled.a`
   color: #c59fc5;
 `
 
-
 class Layout extends React.Component {
-
   componentDidMount() {
     if (window.Snipcart) {
-      window.Snipcart.api.configure('show_continue_shopping', true);
+      window.Snipcart.api.configure("show_continue_shopping", true)
+      window.Snipcart.subscribe("order.completed", function(data) {
+        const { id, total, invoiceNumber, creationDate } = data
+        const order = {
+          orderDescription: `${id} - ${invoiceNumber}`,
+          priceTotal: total,
+          orderId: id,
+          orderDateTime: creationDate,
+        }
+        try {
+          fetch("/.netlify/functions/updateOrder", {
+            method: "POST",
+            body: JSON.stringify(order),
+            headers: { "Content-Type": "application/json" },
+          })
+            .then(res => res.json())
+            .then(json => console.log(json))
+          console.log("Order Completed:")
+          console.log(order)
+        } catch (error) {
+          console.log("Error: ", errr.message);
+        }
+      })
     }
   }
-
 
   render() {
     const { location, children } = this.props
@@ -49,15 +66,9 @@ class Layout extends React.Component {
     let header
 
     if (location.pathname === rootPath) {
-      header = (
-        <HeaderMain shopName={siteName}>
-        </HeaderMain>
-      )
+      header = <HeaderMain shopName={siteName}></HeaderMain>
     } else {
-      header = (
-        <HeaderMinor shopName={siteName}>
-        </HeaderMinor>
-      )
+      header = <HeaderMinor shopName={siteName}></HeaderMinor>
     }
 
     return (
@@ -68,8 +79,15 @@ class Layout extends React.Component {
             {header}
             <MainSection>{children}</MainSection>
             <FooterStyled>
-              <strong>Gatsby Snipcart Starter
-           - Made by <ExternalLink href="https://www.issydennis.com/" target="_blank" rel="noopener noreferrer">Issy Dennis</ExternalLink>
+              <strong>
+                Gatsby Snipcart Starter - Made by{" "}
+                <ExternalLink
+                  href="https://www.issydennis.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Issy Dennis
+                </ExternalLink>
               </strong>
             </FooterStyled>
           </PageWrapper>
