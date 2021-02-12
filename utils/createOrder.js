@@ -1,5 +1,5 @@
-const space = 'kjntxdauc8bu'
-const accessToken =  'CFPAT-Uy09SMxVwxGxI6Am4-SQD0LLY4RnAKr4UEY0tWPB58E'
+const space = 'u7et600tztfd'
+const accessToken =  'CFPAT-9i2z0xGQG0aF0VIOJwepfQAupsdoHsFpN6KC2R7yHdM'
 
 const contentful = require('contentful-management');
 const client = contentful.createClient({
@@ -7,7 +7,7 @@ const client = contentful.createClient({
 });
 
 
-module.exports = function createOrder(orderDescription, priceTotal, orderId) {
+module.exports = function createOrder(orderDescription, priceTotal, orderId, orderQuantatity) {
 
     return client.getSpace(space)
         .then(space => space.getEnvironment('master'))
@@ -16,15 +16,19 @@ module.exports = function createOrder(orderDescription, priceTotal, orderId) {
                 orderDescription: {
                     'en-US': orderDescription
                 },
-                orderDateTime: {
+                orderTime: {
                     'en-US': new Date()
                 },
-                priceTotal: {
+                price: {
                     'en-US': priceTotal
                 },
                 orderId: {
                     'en-US': orderId
                 },
+                orderQuantatity: {
+                    'en-US': orderQuantatity
+
+                }
                 
             }
         }))

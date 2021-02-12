@@ -2,9 +2,9 @@ const createOrder = require('../utils/createOrder');
 
 exports.handler = function (event, context, callback) {
 
-    const { orderDescription, priceTotal, orderId } = JSON.parse(event.body);
+    const { orderDescription, priceTotal, orderId, orderQuantatity } = JSON.parse(event.body);
 
-    createOrder(orderDescription, priceTotal, orderId )
+    createOrder(orderDescription, priceTotal, orderId, orderQuantatity )
         .then(entry => callback(null, {
             headers: {
                 'Content-Type': 'application/json'
