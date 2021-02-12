@@ -3,7 +3,7 @@ module.exports = {
     title: `E-commerce Snipcart and Gatsby Starter`,
     author: `Issy Dennis`,
     description: `A simple e-commerce shop using Gatsby and Snipcart.`,
-    siteUrl: `https://gatsby-snipcart-starter.netlify.com/`,
+    siteUrl: `https://dazzling-snyder-43eb54.netlify.app`,
   },
   plugins: [
     {
@@ -61,7 +61,7 @@ module.exports = {
       resolve: 'gatsby-plugin-snipcart',
       options: {
         //replace with own Snipcart API key
-        apiKey: 'MjQ2MDY4MDctMDZkYi00ZTY0LWFlODItNzhlMmEzZDg1NTBiNjM2OTc2Nzk1NjcwMTU3MTkx',
+        apiKey: 'YThhYWRhY2YtMTRjMy00ZDZhLWIyYTgtYWYzZjBmNzExNTZkNjM3NDI4NjQ2NDE0NzYzODk3',
         autopop: true,
           }
     },
