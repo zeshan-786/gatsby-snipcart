@@ -37,7 +37,7 @@ class Layout extends React.Component {
       window.Snipcart.subscribe("order.completed", function(data) {
         console.log(data)
         const { id, total, invoiceNumber, creationDate, items } = data
-        const quantity = items.reduce((sum, item)=> sum+item,0)
+        const quantity = items.reduce((sum, item)=> sum+item.quantity,0)
         const order = {
           orderDescription: `${id} - ${invoiceNumber}`,
           priceTotal: total,
