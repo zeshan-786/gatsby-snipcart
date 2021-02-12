@@ -36,13 +36,14 @@ class Layout extends React.Component {
       window.Snipcart.api.configure("show_continue_shopping", true)
       window.Snipcart.subscribe("order.completed", function(data) {
         console.log(data)
-        const { id, total, invoiceNumber, creationDate, quantatity } = data
+        const { id, total, invoiceNumber, creationDate, items } = data
+        const quantity = items.reduce((sum, item)=> sum+item,0)
         const order = {
           orderDescription: `${id} - ${invoiceNumber}`,
           priceTotal: total,
           orderId: id,
           orderDateTime: creationDate,
-          orderQuantatity: quantatity
+          orderQuantatity: quantity
         }
         try {
           fetch("/.netlify/functions/updateOrder", {
